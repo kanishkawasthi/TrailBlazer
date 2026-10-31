@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Trailblazer | Jeep Club & Off-Road Event Management</title>
+    <meta name="description" content="Trailblazer is a premium off-road club command center for members, events, queues, and history." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+    <div class="app-shell">
+        <nav class="topbar photo-section nav-photo-hint">
+            <div class="brand">
+                <img src="images/jeep-logo.svg" alt="Trailblazer Jeep Club" class="brand-logo" />
+                <div>
+                    <div class="brand-text">TRAILBLAZER</div>
+                    <div class="brand-subtitle">Off-road club command center</div>
+                </div>
+            </div>
+            <div class="nav-links">
+                <button onclick="showPage('dashboard')" id="nav-dashboard" class="active">Dashboard</button>
+                <button onclick="showPage('members')" id="nav-members">Members</button>
+                <button onclick="showPage('events')" id="nav-events">Events</button>
+                <button onclick="showPage('register')" id="nav-register">Register</button>
+                <button onclick="showPage('waitlist')" id="nav-waitlist">Waiting List</button>
+                <button onclick="showPage('history')" id="nav-history">History</button>
+            </div>
+        </nav>
+
+        <header class="hero-panel">
+            <div class="hero-copy">
+                <div class="eyebrow">TRAILBLAZER • Premium off-road operations</div>
+                <h1>YOUR TRAIL. YOUR TRIBE.</h1>
+                <p>Where off-road legends are made in dust, mud, and rock. Manage members, events, and waiting lists with a polished, real-time experience.</p>
+                <div class="hero-actions">
+                    <button class="btn btn-primary" onclick="showPage('register')">Register Now</button>
+                    <button class="btn btn-outline" onclick="showPage('events')">Explore Events</button>
+                </div>
+                <div class="hero-stats">
+                    <div class="hero-stat-card">
+                        <div class="hero-stat-value" id="hero-members">0</div>
+                        <div class="hero-stat-label">Members</div>
+                    </div>
+                    <div class="hero-stat-card">
+                        <div class="hero-stat-value" id="hero-events">0</div>
+                        <div class="hero-stat-label">Events</div>
+                    </div>
+                    <div class="hero-stat-card">
+                        <div class="hero-stat-value" id="hero-registrations">0</div>
+                        <div class="hero-stat-label">Registered</div>
+                    </div>
+                    <div class="hero-stat-card">
+                        <div class="hero-stat-value" id="hero-queue">0</div>
+                        <div class="hero-stat-label">Queue</div>
+                    </div>
+                </div>
+            </div>
+            <div class="hero-visual">
+                <div class="terrain-card">
+                    <div class="terrain-grid"></div>
+                    <div class="terrain-badge">Live DSA</div>
+                    <div class="terrain-info">
+                        <div class="terrain-title">Linked List + Queue</div>
+                        <div class="terrain-subtitle">Animated member storage and fair FIFO promotions on every key workflow.</div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <div id="toast"></div>
+
+        <main class="content-shell">
+            <div id="page-dashboard" class="page active">
+                <div class="page-heading dashboard-banner photo-section">
+                    <div class="dashboard-banner-copy">
+                        <div class="eyebrow">TRAILBLAZER • live operations</div>
+                        <h2>Dashboard</h2>
+                        <p class="page-note">Live pulse of your club, events, and queue activity.</p>
+                    </div>
+                    <div class="live-clock" id="dashboard-clock">--:--</div>
+                </div>
+                <div class="dashboard-hero-card">
+                    <div>
+                        <div class="eyebrow">TRAILBLAZER • live overview</div>
+                        <h3>Every trail becomes a managed experience.</h3>
+                        <p>Members, registrations, and queue flow are tracked live so your club stays organized from first signup to final promotion.</p>
+                    </div>
+                    <div class="dashboard-quick-actions">
+                        <div class="mini-pill">Active roster</div>
+                        <div class="mini-pill">Fair FIFO</div>
+                        <div class="mini-pill">Live history</div>
+                    </div>
+                </div>
+
+                <div class="dashboard-highlights" id="dashboard-insights"></div>
+
+                <div class="dashboard-cards">
+                    <div class="card card--members">
+                        <div class="card-label">Total Members</div>
+                        <div class="card-value" id="stat-members">0</div>
+                    </div>
+                    <div class="card card--events">
+                        <div class="card-label">Total Events</div>
+                        <div class="card-value" id="stat-events">0</div>
+                    </div>
+                    <div class="card card--registered">
+                        <div class="card-label">Registered</div>
+                        <div class="card-value" id="stat-registered">0</div>
+                    </div>
+                    <div class="card card--waiting">
+                        <div class="card-label">Waiting List</div>
+                        <div class="card-value" id="stat-waiting">0</div>
+                    </div>
+                </div>
+                <div class="photo-break photo-break--dashboard"></div>
+                <div class="dashboard-grid">
+                    <div class="panel-card">
+                        <div class="panel-title">Live Activity</div>
+                        <div id="recent-activity-feed" class="activity-feed"></div>
+                    </div>
+                    <div class="panel-card">
+                        <div class="panel-title">DSA Snapshot</div>
+                        <div id="dashboard-dsa-panel" class="dsa-preview"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="page-members" class="page">
+                <div class="page-heading">
+                    <div>
+                        <h2>Member Management</h2>
+                        <p class="page-note">Managed through a linked-list-backed experience that highlights the current structure.</p>
+                    </div>
+                    <div class="pill" id="member-count-pill">0 members</div>
+                </div>
+
+                <div class="form-box">
+                    <h3 id="member-form-title">Add New Member</h3>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Full Name</label>
+                            <input type="text" id="m-name" placeholder="e.g. Ram Lakhan" />
+                        </div>
+                        <div class="form-group">
+                            <label>Phone Number</label>
+                            <input type="text" id="m-phone" placeholder="e.g. 0300-1234567" />
+                        </div>
+                        <div class="form-group">
+                            <label>Email Address</label>
+                            <input type="email" id="m-email" placeholder="e.g. ram.lakhan@email.com" />
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Jeep Model</label>
+                            <input type="text" id="m-jeep" placeholder="e.g. Gypsy King" />
+                        </div>
+                        <div class="form-group">
+                            <label>Membership Status</label>
+                            <select id="m-status">
+                                <option value="Active">Active</option>
+                                <option value="Inactive">Inactive</option>
+                            </select>
+                        </div>
+                        <div class="form-group action-row">
+                            <button class="btn btn-primary" onclick="saveMember()">Save Member</button>
+                            <button class="btn btn-warning" onclick="clearMemberForm()" id="btn-cancel-member" style="display:none">Cancel</button>
+                        </div>
+                    </div>
+                    <input type="hidden" id="m-edit-id" value="" />
+                </div>
+
+                <div class="photo-section members-divider">
+                    <div class="members-divider-text">EVERY LEGEND STARTS WITH A MEMBERSHIP</div>
+                </div>
+
+                <div class="photo-break photo-break--members"></div>
+
+                <div class="search-bar">
+                    <input type="text" id="member-search" placeholder="Search by name or ID..." oninput="renderMembersTable()" />
+                    <button class="btn btn-primary" onclick="renderMembersTable()">Search</button>
+                    <button class="btn btn-warning" onclick="document.getElementById('member-search').value=''; renderMembersTable()">Clear</button>
+                </div>
+
+                <div class="table-box">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Member ID</th>
+                                <th>Name</th>
+                                <th>Phone</th>
+                                <th>Email</th>
+                                <th>Jeep Model</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="members-table-body">
+                            <tr><td colspan="7" class="empty-msg">No members yet. Add one above.</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="panel-card panel-card-large">
+                    <div class="panel-title">Linked List Visualizer</div>
+                    <div id="members-dsa-panel" class="dsa-preview"></div>
+                </div>
+            </div>
+
+            <div id="page-events" class="page">
+                <div class="page-heading events-banner photo-section">
+                    <div class="events-banner-copy">
+                        <div class="eyebrow">ACTIVATE THE NEXT TRAIL</div>
+                        <h2>Event Management</h2>
+                        <p class="page-note">Coordinate off-road events, capacity, and readiness from one elevated view.</p>
+                    </div>
+                </div>
+
+                <div class="events-empty-state photo-section">
+                    <div class="events-empty-card">
+                        <div class="eyebrow">PHOTO-DRIVEN OPERATIONS</div>
+                        <h3>Shape your next expedition from a cinematic command view.</h3>
+                        <p>Create events, track capacity, and keep every off-road launch moving with clarity.</p>
+                    </div>
+                </div>
+
+                <div class="form-box">
+                    <h3 id="event-form-title">Create New Event</h3>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Event Name</label>
+                            <input type="text" id="e-name" placeholder="e.g. Desert Safari 2024" />
+                        </div>
+                        <div class="form-group">
+                            <label>Location</label>
+                            <input type="text" id="e-location" placeholder="e.g. Cholistan Desert" />
+                        </div>
+                        <div class="form-group">
+                            <label>Event Date</label>
+                            <input type="date" id="e-date" />
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Max Capacity</label>
+                            <input type="number" id="e-capacity" placeholder="e.g. 20" min="1" />
+                        </div>
+                        <div class="form-group action-row">
+                            <button class="btn btn-primary" onclick="saveEvent()">Save Event</button>
+                            <button class="btn btn-warning" onclick="clearEventForm()" id="btn-cancel-event" style="display:none">Cancel</button>
+                        </div>
+                    </div>
+                    <input type="hidden" id="e-edit-id" value="" />
+                </div>
+
+                <div class="photo-break photo-break--events"></div>
+
+                <div class="search-bar">
+                    <input type="text" id="event-search" placeholder="Filter by location or name..." oninput="renderEventsTable()" />
+                    <button class="btn btn-warning" onclick="document.getElementById('event-search').value=''; renderEventsTable()">Clear</button>
+                </div>
+
+                <div class="table-box">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Event ID</th>
+                                <th>Event Name</th>
+                                <th>Location</th>
+                                <th>Date</th>
+                                <th>Capacity</th>
+                                <th>Registered</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="events-table-body">
+                            <tr><td colspan="8" class="empty-msg">No events yet. Create one above.</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div id="page-register" class="page">
+                <div class="page-heading">
+                    <div>
+                        <h2>Event Registration</h2>
+                        <p class="page-note">Direct registration or queue fallback for full events.</p>
+                    </div>
+                </div>
+                <div class="register-shell">
+                    <div class="register-main">
+                        <div class="form-box">
+                            <h3>Register a Member to an Event</h3>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label>Select Member</label>
+                                    <select id="reg-member">
+                                        <option value="">-- Select Member --</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>Select Event</label>
+                                    <select id="reg-event" onchange="checkEventCapacity()">
+                                        <option value="">-- Select Event --</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div id="reg-capacity-info" class="capacity-info"></div>
+                            <button class="btn btn-success" onclick="registerMember()">Register Now</button>
+                        </div>
+                        <div class="panel-card panel-card-large">
+                            <div class="panel-title">Queue Visualizer</div>
+                            <div id="queue-preview" class="dsa-preview"></div>
+                        </div>
+                        <div class="photo-break photo-break--register"></div>
+                        <div class="search-bar">
+                            <input type="text" id="reg-search" placeholder="Search by member or event..." oninput="renderRegistrationsTable()" />
+                            <button class="btn btn-warning" onclick="document.getElementById('reg-search').value=''; renderRegistrationsTable()">Clear</button>
+                        </div>
+                        <div class="table-box">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Reg. ID</th>
+                                        <th>Member</th>
+                                        <th>Event</th>
+                                        <th>Date Registered</th>
+                                        <th>Status</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="reg-table-body">
+                                    <tr><td colspan="6" class="empty-msg">No active registrations.</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <aside class="register-atmosphere-panel photo-section" aria-hidden="true">
+                        <div class="register-atmosphere-quote">“The trail doesn’t care about your excuses.”</div>
+                    </aside>
+                </div>
+            </div>
+
+            <div id="page-waitlist" class="page">
+                <div class="page-heading waitlist-banner photo-section">
+                    <div class="waitlist-banner-copy">
+                        <div class="eyebrow">FIFO • fair promotion</div>
+                        <h2>Waiting List (Queue)</h2>
+                        <p class="page-note">The first person in line gets promoted first. Fair and automatic.</p>
+                    </div>
+                </div>
+
+                <div class="search-bar">
+                    <label class="filter-label">Filter by Event:</label>
+                    <select id="waitlist-event-filter" onchange="renderWaitlist()">
+                        <option value="">-- All Events --</option>
+                    </select>
+                </div>
+
+                <div id="waitlist-container" class="queue-list"></div>
+            </div>
+
+            <div id="page-history" class="page photo-section history-page">
+                <div class="history-shell">
+                    <div class="page-heading history-banner">
+                        <div>
+                            <h2>Registration History</h2>
+                            <p class="page-note">A timeline of club actions, promotions, and queue events.</p>
+                        </div>
+                    </div>
+                    <div id="history-timeline" class="timeline"></div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

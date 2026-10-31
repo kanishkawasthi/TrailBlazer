@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="120" height="40" viewBox="0 0 120 40">
+  <!-- Simple jeep icon -->
+  <g fill="#f0a500" stroke="none">
+    <!-- wheels -->
+    <circle cx="28" cy="30" r="6" fill="#1a1a2e" />
+    <circle cx="72" cy="30" r="6" fill="#1a1a2e" />
+    <!-- body -->
+    <rect x="12" y="16" width="72" height="10" rx="2" ry="2" />
+    <!-- cabin -->
+    <path d="M60 16 L68 10 L84 10 L90 16 Z" />
+    <!-- front bumper -->
+    <rect x="84" y="22" width="10" height="4" rx="1" ry="1" />
+    <!-- grill lines -->
+    <rect x="16" y="18" width="2" height="6" fill="#1a1a2e" />
+    <rect x="20" y="18" width="2" height="6" fill="#1a1a2e" />
+    <rect x="24" y="18" width="2" height="6" fill="#1a1a2e" />
+  </g>
+</svg>

@@ -1,0 +1,12 @@
+{
+  "name": "jeepclub-backend",
+  "version": "1.0.0",
+  "description": "Minimal static server to serve the JeepClubSystem project root",
+  "main": "server.js",
+  "scripts": {
+    "dev": "node server.js",
+    "start": "node server.js"
+  },
+  "author": "",
+  "license": "MIT"
+}
